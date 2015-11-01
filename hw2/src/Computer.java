@@ -35,7 +35,7 @@ class Computer {
         if (option){
             writer.printf("Your cards are");
             for(int i = 0; i < cards.size(); ++i){
-                writer.printf(" (%c) %s", (char) (i + 97), cards.get(i));
+                writer.printf(" (%c) %s", (char) (i + (int)'a'), cards.get(i));
             }
             writer.printf("\n");
             writer.printf("Which cards do you want to keep? ");
@@ -43,7 +43,7 @@ class Computer {
         else{
             writer.printf("Your new cards are");
             for(Card c: cards)
-                writer.printf(" %s", c.toString());
+                writer.printf(" %s", c);
             writer.printf(".\n");
         }
     }

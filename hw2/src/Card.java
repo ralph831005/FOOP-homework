@@ -3,6 +3,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.lang.*;
 import java.lang.Exception;
+import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
 import java.lang.System;
@@ -27,11 +28,12 @@ class Card implements Comparable<Card> {
         return NumberTable[serialNumber/4];
     }
     public int getNumberInt(){
-        return serialNumber/4 + 1;
+        return serialNumber/4 + 2;
     }
     public String getColor(){
         return ColorTable[serialNumber%4];
     }
+    @Override
     public String toString(){
         return (new StringBuilder()).append(getColor()).append(getNumber()).toString();
     }
