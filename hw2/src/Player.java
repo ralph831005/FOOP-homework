@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.lang.*;
+import java.lang.Class;
 import java.lang.Exception;
 import java.lang.String;
 import java.lang.StringBuilder;
@@ -82,5 +83,9 @@ class Player {
     public int requestCards(){
         return request;
     }
-
+    public ArrayList<Card> giveBackCards(){
+        ArrayList<Card> tempCards = new ArrayList<Card>(cardsOnHand);
+        cardsOnHand.clear();
+        return tempCards;
+    }
 }

@@ -25,8 +25,8 @@ class CheckHand{
     public static final int JacksOrBetter = 1;
     public static final int Others = 0;
     public static boolean isStraight(List<Card> cards){
-        if(cards.get(4).getNumber == "A" and cards.get(0).getNumber() == "2") //special for A2345
-            if(isFlush(cards.subList(0, 4))) //given the cards start with A2, check if the cards is 2345
+        if(cards.get(4).getNumber() == "A" && cards.get(0).getNumber() == "2") //special for A2345
+            if(isStraight(cards.subList(0, 4))) //given the cards start with A2, check if the cards is 2345
                 return true;
         for(int i = 1; i < cards.size(); ++i)
             if(cards.get(i).getNumberInt() - cards.get(i-1).getNumberInt() != 1)
@@ -66,9 +66,9 @@ class CheckHand{
     public static boolean isThreeOfAKind(ArrayList<Card> cards){
         if(isAKind(cards.subList(0, 3)))
             return true;
-        if(isAkind(cards.sublist(1, 4)))
+        if(isAKind(cards.subList(1, 4)))
             return true;
-        if(isAkind(cards.sublist(2, 5)))
+        if(isAKind(cards.subList(2, 5)))
             return true;
         return false;
 

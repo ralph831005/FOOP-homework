@@ -47,6 +47,9 @@ class Computer {
             writer.printf(".\n");
         }
     }
+    private int getReward(){
+        return 1;
+    }
     private void printDropCards(String drop){
         writer.printf("Okay. I will discard%s.\n", drop);
     }
