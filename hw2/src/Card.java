@@ -1,18 +1,3 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.lang.*;
-import java.lang.Exception;
-import java.lang.Override;
-import java.lang.String;
-import java.lang.StringBuilder;
-import java.lang.System;
-import java.lang.management.BufferPoolMXBean;
-import java.net.CookieHandler;
-import java.util.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 class Card implements Comparable<Card> {
     private static final String[] NumberTable = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
     private static final String[] ColorTable = {"C", "D", "H", "S"};

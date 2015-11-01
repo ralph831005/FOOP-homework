@@ -1,16 +1,4 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.lang.*;
-import java.lang.Exception;
-import java.lang.String;
-import java.lang.StringBuilder;
-import java.lang.System;
-import java.lang.management.BufferPoolMXBean;
-import java.net.CookieHandler;
-import java.util.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 class Shuffler{
@@ -22,11 +10,11 @@ class Shuffler{
             deck.add(new Card(i));
         index = 0;
     }
-    void shuffle(){
+    public void shuffle(){
         Collections.shuffle(deck);
         index = 0;
     }
-    ArrayList<Card> getTop(int n){
+    public ArrayList<Card> getTop(int n){
         if(index+n > 51){
             shuffle();
             index = 0;

@@ -1,17 +1,7 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.lang.*;
-import java.lang.Class;
-import java.lang.Exception;
-import java.lang.String;
-import java.lang.StringBuilder;
-import java.lang.System;
-import java.lang.management.BufferPoolMXBean;
-import java.net.CookieHandler;
-import java.util.*;
+import java.lang.Override;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 class Player {
     private ArrayList<Card> cardsOnHand;
@@ -19,6 +9,7 @@ class Player {
     private String name;
     private int request;
     private int PDollar;
+    private int bet;
     Player(){
         cardsOnHand = new ArrayList<Card>();
         reader = new BufferedReader(new InputStreamReader(System.in));
@@ -29,9 +20,9 @@ class Player {
     public int getPDollar(){
         return PDollar;
     }
-    int betDollars(){
+    public int betDollars(){
         try {
-            int bet = Integer.valueOf(reader.readLine());
+            bet = Integer.valueOf(reader.readLine());
             PDollar -= bet;
             return bet;
         }
@@ -39,7 +30,11 @@ class Player {
             return 0;
         }
     }
-    public String getName(){
+    public int getBet(){
+        return bet;
+    }
+    @Override
+    public String toString(){
         return name;
     }
     String initName(){
@@ -87,5 +82,8 @@ class Player {
         ArrayList<Card> tempCards = new ArrayList<Card>(cardsOnHand);
         cardsOnHand.clear();
         return tempCards;
+    }
+    public void getReward(int money){
+        PDollar += money;
     }
 }

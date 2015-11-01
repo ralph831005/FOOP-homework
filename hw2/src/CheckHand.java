@@ -25,9 +25,10 @@ class CheckHand{
     public static final int JacksOrBetter = 1;
     public static final int Others = 0;
     public static boolean isStraight(List<Card> cards){
-        if(cards.get(4).getNumber() == "A" && cards.get(0).getNumber() == "2") //special for A2345
-            if(isStraight(cards.subList(0, 4))) //given the cards start with A2, check if the cards is 2345
-                return true;
+        if(cards.size() == 5)
+            if(cards.get(4).getNumber() == "A" && cards.get(0).getNumber() == "2") //special for A2345
+                if(isStraight(cards.subList(0, 4))) //given the cards start with A2, check if the cards is 2345
+                    return true;
         for(int i = 1; i < cards.size(); ++i)
             if(cards.get(i).getNumberInt() - cards.get(i-1).getNumberInt() != 1)
                 return false;
@@ -56,7 +57,6 @@ class CheckHand{
         return false;
     }
     public static boolean isFullHouse(ArrayList<Card> cards){
-
         if(isAKind(cards.subList(0,3)) && isAKind(cards.subList(3,5)))
             return true;
         if(isAKind(cards.subList(0,2)) && isAKind(cards.subList(2,5)))
