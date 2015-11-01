@@ -22,7 +22,7 @@ class Card implements Comparable<Card> {
     public String toString(){
         return (new StringBuilder()).append(getColor()).append(getNumber()).toString();
     }
-    public int compareTo(Card obj){
+    public int compareTo(Card obj){     //implement comparable interface
         if(this.serialNumber < obj.serialNumber)
             return -1;
         else if(this.serialNumber == obj.serialNumber)

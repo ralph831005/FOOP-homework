@@ -20,7 +20,7 @@ class Player {
     public int getPDollar(){
         return PDollar;
     }
-    public int betDollars(){
+    public int betDollars(){    //get the P-dollar that the player wants to bet
         try {
             bet = Integer.valueOf(reader.readLine());
             PDollar -= bet;
@@ -30,14 +30,14 @@ class Player {
             return 0;
         }
     }
-    public int getBet(){
+    public int getBet(){        //get the bet of the player for the current round
         return bet;
     }
     @Override
     public String toString(){
         return name;
     }
-    String initName(){
+    String initName(){          //get players name
         try {
             name = new String(reader.readLine());
             return name;
@@ -51,10 +51,10 @@ class Player {
         cardsOnHand.addAll(cards);
         Collections.sort(cardsOnHand);
     }
-    public ArrayList<Card> showCards(){
+    public ArrayList<Card> showCards(){     //show computer your cards
         return cardsOnHand;
     }
-    public String dropCards(){
+    public String dropCards(){      //get player's decision to retain which cards, drop other cards and tell computer
         try {
             String retainCards = new String(reader.readLine());
             StringBuilder drop = new StringBuilder();
@@ -68,6 +68,8 @@ class Player {
             }
             cardsOnHand.removeAll(cardsToDrop);
             request = 5 - cardsOnHand.size();
+            if(drop.length() == 0)
+                drop.append(" nothing");
             return drop.toString();
         }
         catch (Exception e){
