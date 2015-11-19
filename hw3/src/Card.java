@@ -22,7 +22,7 @@ class Card implements Comparable<Card> {
         if(serialNumber < 52)
             return ColorTable[serialNumber%4];
         else
-            return ColorTable[serialNumber/4+4];
+            return ColorTable[serialNumber%4+4];
     }
     @Override
     public String toString(){
@@ -38,7 +38,7 @@ class Card implements Comparable<Card> {
     }
     public boolean equalTo(Card c){
         if(serialNumber < 52)
-            if(serialNumber % 4 == c.serialNumber % 4)
+            if(serialNumber / 4 == c.serialNumber / 4)
                 return true;
         return false;
     }

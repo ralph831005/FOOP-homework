@@ -1,8 +1,7 @@
 import java.io.PrintWriter;
-import java.lang.System;
 import java.util.ArrayList;
 import java.util.Collections;
-
+import java.util.Random;
 abstract class GameRule{
     protected ArrayList<Card> cards;
     protected ArrayList<Player> players;
@@ -10,7 +9,7 @@ abstract class GameRule{
     private Random random;
 
     public GameRule(){
-        cards = new ArrayList<Cards>();
+        cards = new ArrayList<Card>();
         players = new ArrayList<Player>();
         writer = new PrintWriter(System.out, true);
         random = new Random();
@@ -31,14 +30,20 @@ abstract class GameRule{
             players.add(new ComputerPlayer(i));
         int human_index = random.nextInt(4);
         writer.printf("You are player %d\n", human_index);
-        players.add(human_index, new HumanPlayer());
+        players.add(human_index, new HumanPlayer(name));
     }
-    public boolean checkWin(int round){
+    public int checkWin(int round, int now){
+        int new_now = now;
         for(int index = players.size() -1; index >= 0; --index)
-            if(players.get(index).hasNoCard()){
+            if(players.get(index).hasNoCard()) {
+                if(index == now)
+                    new_now = now - 1;
                 writer.printf("%s win at %d round\n", players.get(index), round);
                 players.remove(index);
             }
+        if(new_now == players.size())
+            new_now -= 1;
+        return  new_now;
     }
     public void Process(){
         writer.println("Game Start");
@@ -46,7 +51,7 @@ abstract class GameRule{
         int round = 0;
 
         //Check if some players have all cards dropped at the first time.
-        checkWin(round);
+        checkWin(round, 0); //second arguement is unused.
         
         int now_turn = 0;
         int next_turn = 1;
@@ -58,13 +63,13 @@ abstract class GameRule{
             Player next = players.get(next_turn);
             int choice = current.pick(next.getNumber());
             Card card = next.giveCard(choice);
-            writer.printf("%s draws %s from %s", current, card, next);
+            writer.printf("%s draws %s from %s\n", current, card, next);
             current.getCard(card);
             current.dropCards(); //drop cards and print cards
             next.printCards();
-            checkWin(round);
+            now_turn =  checkWin(round, now_turn);
             now_turn = (now_turn + 1) % players.size();
-            next_turn = (next_turn + 1) % players.size();
+            next_turn = (now_turn + 1) % players.size();
         }
 
         writer.printf("%s lose\n", players.get(0));

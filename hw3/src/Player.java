@@ -1,3 +1,6 @@
+import java.io.*;
+import java.util.*;
+
 abstract class Player{
 	protected String name;
 	protected ArrayList<Card> cards;
@@ -10,10 +13,10 @@ abstract class Player{
 		return cards.size() == 0;
 	}
 	public void printCards(){
-		writer.print("%s :", name);
+		writer.printf("%s :", name);
 		for(Card c : cards)
 			writer.printf("%s ", c);
-		
+		writer.println("");
 	}
 	public void dropCards(){
 		Collections.sort(cards);
@@ -34,7 +37,7 @@ abstract class Player{
 	public void getCard(Card c){
 		cards.add(c);
 	}
-	public abstract int pick();
+	public abstract int pick(int select_range);
 	public Card giveCard(int choice){
 		return cards.remove(choice);
 	}
