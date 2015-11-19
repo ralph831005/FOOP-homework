@@ -36,4 +36,10 @@ class Card implements Comparable<Card> {
         else
             return 1;
     }
+    public boolean equalTo(Card c){
+        if(serialNumber < 52)
+            if(serialNumber % 4 == c.serialNumber % 4)
+                return true;
+        return false;
+    }
 }
