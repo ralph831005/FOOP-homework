@@ -1,6 +1,6 @@
-class Jokers extends GameRule{
-	public Jokers(){
-		super();
+class Jokers extends OldMaid{
+	public Jokers(boolean human){
+		super(human);
 	}
 	public void setCards(){
 		for(int i = 0; i < 54; ++i)

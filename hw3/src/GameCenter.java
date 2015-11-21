@@ -11,18 +11,24 @@ public class GameCenter{
 	static void displayChoice(){
 		System.out.println("(A) Old-Maid -- Two Jokers.");
 		System.out.println("(B) Old-Maid -- Random Pick A Card Out.");
+		System.out.println("(C) Old-Maid -- Two Jokers, all computer players.");
+		System.out.println("(D) Old-Maid -- Random Pick A Card Out, all computer players.");
 		System.out.println("(Else) Quit.");
 	}
-	static GameRule getChoice(Scanner sc){
+	static OldMaid getChoice(Scanner sc){
 		String choice = sc.nextLine();
 		if(choice.indexOf('A') != -1 || choice.indexOf('a') != -1)
-			return new Jokers();
+			return new Jokers(true);
 		else if(choice.indexOf('B') != -1 || choice.indexOf('b') != -1)
-			return new OldMaid();
+			return new PickOneOut(true);
+		else if(choice.indexOf('C') != -1 || choice.indexOf('c') != -1)
+			return new Jokers(false);
+		else if(choice.indexOf('D') != -1 || choice.indexOf('d') != -1)
+			return new PickOneOut(false);
 		else
 			return null;
 	}
-	static void start(GameRule game, String player_name){
+	static void start(OldMaid game, String player_name){
 		game.setCards();
 		game.setPlayers(player_name);
 		game.dealCards();
@@ -34,7 +40,7 @@ public class GameCenter{
 		String player_name = Welcome(sc);
 		while(true){
 			displayChoice();
-			GameRule game = getChoice(sc);
+			OldMaid game = getChoice(sc);
 			if(game == null)
 				break;
 			start(game, player_name);
