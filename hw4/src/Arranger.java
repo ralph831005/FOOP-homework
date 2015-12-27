@@ -23,7 +23,6 @@ public class Arranger {
         split = false;
         position = i;
         player = _player;
-        face_up = new ArrayList<>();
     }
     public Arranger(Arranger _arranger){
         player = _arranger.player;
@@ -34,6 +33,20 @@ public class Arranger {
         split = _arranger.split;
         position = _arranger.position;
     }
+	public void giveCards(Card up, Card down){
+		face_up.add(up);
+		face_down = down;
+	}
+	public ArrayList<Card> showCards(){
+		ArrayList toReturn = new ArrayList<>(face_up);
+		if(face_down != null)
+			toReturn.add(face_down);
+		return toReturn;
+	}
+	public boolean hit_card(Card c){
+		face_up.add(c);
+		
+	}
     public int make_bet (ArrayList<Hand> lastTable, int total_player){
         bet = player.make_bet(lastTable, total_player, position);
         try {
@@ -47,8 +60,8 @@ public class Arranger {
             return 0;
         }
     }
-    public boolean buy_insurance(Card my_open, Card dealer_open, ArrayList<Hand> current_table){
-        insured = player.buy_insurance(my_open, dealer_open, current_table);
+    public boolean buy_insurance(Card dealer_open, ArrayList<Hand> current_table){
+        insured = player.buy_insurance(face_up.get(0), dealer_open, current_table);
         if(insured) {
             try {
                 set_player_chip(-bet / 2.0);
