@@ -28,6 +28,7 @@ class Shuffler {
     }
     public void shuffle(){
         Collections.shuffle(cards);
+        index = 0;
     }
 
     public ArrayList<Card> getnTop(int n){
@@ -40,7 +41,7 @@ class Shuffler {
     }
 
     public boolean notEnoughForNextRound(int player){
-        return (player * 4 < cards.size()-index);
+        return (player * 5 + 5 > cards.size()-index);
     }
 
 }
