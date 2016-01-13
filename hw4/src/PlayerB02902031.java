@@ -81,7 +81,7 @@ public class PlayerB02902031 extends Player{
         return false;
     }
     @Override
-    public boolean do_double(Hand my_open, Card dealer_open, ArrayList<Hand> arrayList) {
+    public boolean do_double(Hand my_open, Card dealer_open, ArrayList<Hand> current_table) {
         int dealer_value = Math.min(dealer_open.getValue(), 10) % 10;
         if(!isBlackJack(my_open.getCards())){
             try {
@@ -113,7 +113,7 @@ public class PlayerB02902031 extends Player{
                         return true;
                 } else {
                     int h_total = hard_total(my_open.getCards());
-                    if (h_total == 21)
+                    if (h_total >= 21)
                         return false;
                     if (hard_table[hard[h_total]].charAt(dealer_value) == 'H' || hard_table[hard[h_total]].charAt(dealer_value) == 'A')
                         return true;

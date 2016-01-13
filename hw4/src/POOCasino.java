@@ -9,14 +9,22 @@ import java.util.Iterator;
 /**
  * Created by ralph on 2015/12/26.
  */
-public class POOCasino {
-    private ArrayList<Player> players;
-    private ArrayList<Hand> hands;
+public class POOCasino implements Runnable{
+    protected ArrayList<Player> players;
     private Shuffler shuffler;
     private int round;
     private ArrayList<Hand> current_table;
     private ArrayList<Hand> last_table;
     private Dealer dealer;
+    protected POOCasino(int nPiles){
+        players = new ArrayList<>();
+        shuffler = new Shuffler();
+        current_table =  new ArrayList<>();
+        last_table = new ArrayList<>();
+        dealer = new Dealer();
+        round = 0;
+        shuffler.setnPiles(nPiles);
+    }
     public POOCasino(int chips, int _round, String[] player_class){
         players = new ArrayList<>();
         shuffler = new Shuffler();
@@ -34,31 +42,33 @@ public class POOCasino {
             }
         }
         shuffler.setnPiles(1);
-        System.out.println("Welcome to POOCasino established by Ralph Lee (B02902031)");
+        System.out.println("\nWelcome to POOCasino established by Ralph Lee (B02902031)");
         System.out.printf("There are %d players:", players.size());
         for(Player p : players)
-            System.out.printf(" %s", p.getClass());
+            System.out.printf(" %s", p.getClass().toString());
         System.out.println(".");
-        System.out.printf("Initially, they all have %d chips to play black jacks.", chips);
+        System.out.printf("Initially, they all have %d chips to play black jacks.\n", chips);
     }
-
-    public void process(){
+    public void run(){
         System.out.println("Game Start!!");
-        for(int T = 1; T <= round; ++T){
+        for(int T = 1; T <= round; ++T) {
             System.out.printf("==============Round %d start================\n", T);
-            ArrayList<Arranger> player_list = setPlayers();
-            if(shuffler.notEnoughForNextRound(player_list.size())){
-                System.out.println("Shuffle!!!");
-                shuffler.shuffle();
-            }
-            bet(player_list);
-            assignCards(player_list);
-            buyInsurance(player_list);
-            surrender(player_list);
-            hit(player_list);
-            dealer_hit();
-            checkResult(player_list);
+            process();
         }
+    }
+    protected void process(){
+        ArrayList<Arranger> player_list = setPlayers();
+        if(shuffler.notEnoughForNextRound(player_list.size())){
+            System.out.println("Shuffle!!!");
+            shuffler.shuffle();
+        }
+        bet(player_list);
+        assignCards(player_list);
+        buyInsurance(player_list);
+        surrender(player_list);
+        hit(player_list);
+        dealer_hit();
+        checkResult(player_list);
     }
     private ArrayList<Arranger> setPlayers(){
         dealer = new Dealer();
@@ -80,16 +90,15 @@ public class POOCasino {
             if(player.pass())
                 continue;
             player.giveCards(shuffler.getTop(), shuffler.getTop());
-            current_table.add(new Hand(player.showCards()));
         }
         dealer.giveCards(shuffler.getTop(), shuffler.getTop());
-        current_table.add(new Hand(dealer.showCards()));
     }
     private void buyInsurance(ArrayList<Arranger> player_list){
         if(dealer.face_up_isA()){
             System.out.println("Dealer gets an Ace faced up!!");
             System.out.println("Ask players whether to buy insurance...");
             for(Arranger player : player_list){
+                setCurrentTable(player, player_list);
                 player.buy_insurance(dealer.getFaceUp(), current_table);
             }
         }
@@ -98,17 +107,19 @@ public class POOCasino {
         if(!dealer.peekIsBlackJack()) {
             System.out.println("Dealer do not get a Black Jack.");
             System.out.println("Ask players whether to surrender...");
-            for(Arranger player : player_list)
+            for(Arranger player : player_list) {
+                setCurrentTable(player, player_list);
                 player.do_surrender(dealer.getFaceUp(), current_table);
+            }
         }
     }
     private void hit(ArrayList<Arranger> player_list){
         ArrayList<Arranger> split_players = new ArrayList<>();
         for(Arranger player : player_list){
+            setCurrentTable(player, player_list);
             if(player.pass())
                 continue;
             System.out.printf("Flip up %s 's faced-down card\n", player.get_name());
-            current_table.remove(new Hand(player.showCards()));
             player.flipUp();
             Arranger split = player.do_split(dealer.getFaceUp(), current_table);
 
@@ -124,12 +135,10 @@ public class POOCasino {
             // ask player to hit and then assign a card, hit_card method returns a boolean variable of his hand busted.
             while(player.hit_me(dealer.getFaceUp(), current_table) && player.hit_card(shuffler.getTop()));
             System.out.printf("%s now have %d points\n", player.get_name(), player.value());
-            current_table.add(new Hand(player.showCards()));
             if(split != null) {
-                // ask player to hit and then assign a card, hit_card method returns a boolean variable of his hand busted.
+                // ask player to hit and then assign a card, hit_card method returns a boolean variable of his hand busted
                 while (split.hit_me(dealer.getFaceUp(), current_table) && split.hit_card(shuffler.getTop())) ;
                 System.out.printf("%s now have %d points\n", split.get_name(), split.value());
-                current_table.add(new Hand(split.showCards()));
                 split_players.add(split);
             }
         }
@@ -140,6 +149,19 @@ public class POOCasino {
             player_list.add(index+1, player);
         }
 
+    }
+    private void setCurrentTable(Arranger current, ArrayList<Arranger> player_list){
+        current_table.clear();
+        if(current != null) {
+            for (Arranger player : player_list) {
+                if (!player.equals(current))
+                    current_table.add(new Hand(player.showCards()));
+            }
+        }
+        else
+            for (Arranger player : player_list)
+                current_table.add(new Hand(player.showCards()));
+        current_table.add(new Hand(dealer.showCards()));
     }
     private void dealer_hit(){
         System.out.println("Flip up dealer's card");
@@ -196,12 +218,15 @@ public class POOCasino {
                 System.out.println(player);
             }
         }
+        setCurrentTable(null, player_list);
+        last_table = new ArrayList<>(current_table);
+        current_table.clear();
 
     }
     public static void main(String[] args){
         int chips = Integer.valueOf(args[0]);
         int round = Integer.valueOf(args[1]);
         POOCasino pooCasino = new POOCasino(chips, round, Arrays.copyOfRange(args, 2, args.length));
-        pooCasino.process();
+        pooCasino.run();
     }
 }

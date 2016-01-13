@@ -86,6 +86,11 @@ public class Arranger {
         catch (Player.BrokeException e){
             System.out.println("Out of money!!!");
             System.out.println("Bet is set 0 this turn");
+            try {
+                set_player_chip(bet);
+            }catch (Player.BrokeException e2){
+                System.out.println("Set back chips for broken.");
+            }
             bet = 0;
             no_bet = true;
             return 0;
@@ -103,6 +108,11 @@ public class Arranger {
             } catch (Player.BrokeException e) {
                 System.out.println("out of money!!!");
                 System.out.println("can't buy insurance.");
+                try {
+                    set_player_chip(bet/2.0);
+                }catch (Player.BrokeException e2){
+                    System.out.println("Set back chips for broken.");
+                }
                 insured = false;
             }
         }
@@ -125,6 +135,11 @@ public class Arranger {
             }catch (Player.BrokeException e){
                 System.out.println("out of money!!!");
                 System.out.println("can't double");
+                try {
+                    set_player_chip(bet);
+                }catch (Player.BrokeException e2){
+                    System.out.println("Set back chips for broken.");
+                }
                 doubled = false;
             }
         }
@@ -164,6 +179,11 @@ public class Arranger {
             }catch (Player.BrokeException e){
                 System.out.println("out of money!!!");
                 System.out.println("can't split");
+                try {
+                    set_player_chip(bet);
+                }catch (Player.BrokeException e2){
+                    System.out.println("Set back chips for broken.");
+                }
                 split = false;
             }
         }
