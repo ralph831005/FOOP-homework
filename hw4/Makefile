@@ -22,5 +22,10 @@ runHuman:
 	$(RN) -cp $(CP) $(MAIN) $(ROUND) $(CHIPS) $(PLAYER1) $(PLAYER1) $(PLAYER2) $(HPLAYER)
 bonus:
 	$(CC) -cp $(CP) src/bonus/*.java -d $(OUT)
+	$(CC) -cp $(CP) src/*.java -d $(OUT)
+make bonusRun:
+	$(RN) -cp $(CP) BonusPOOCasino 100 10000
+make client:
+	$(RN) -cp $(CP) Client 127.0.0.1 10000
 clean:
 	rm -rf bin/
