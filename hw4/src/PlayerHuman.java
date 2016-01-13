@@ -10,6 +10,7 @@ import java.util.Scanner;
  */
 public class PlayerHuman extends Player {
     Scanner scanner;
+    String name;
     private static void printCard(Card card){
         StringBuilder s = new StringBuilder();
         switch (card.getSuit()){
@@ -69,6 +70,8 @@ public class PlayerHuman extends Player {
     public PlayerHuman(int chips){
         super(chips);
         scanner = new Scanner(System.in);
+        System.out.print("Enter your name : ");
+        name = scanner.next();
     }
     public int make_bet(ArrayList<Hand> last_table, int total_player, int position){
         System.out.println("Last table : ");
@@ -176,6 +179,6 @@ public class PlayerHuman extends Player {
         }
     }
     public String toString(){
-        return (new StringBuilder()).append(this.getClass().getName().substring(6)).append(" : ").append(this.get_chips()).toString();
+        return (new StringBuilder()).append(name).append(" : ").append(this.get_chips()).toString();
     }
 }

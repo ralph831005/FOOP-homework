@@ -78,6 +78,11 @@ public class Arranger {
     }
     public int make_bet (ArrayList<Hand> lastTable, int total_player){
         bet = player.make_bet(lastTable, total_player, position);
+        if(bet <= 0){
+            System.out.printf("%s at %d make bet <= 0, no playing in this round\n", name, position);
+            bet = 0;
+            no_bet = true;
+        }
         try {
             set_player_chip(-(double) bet);
             System.out.printf("%s at %d bets %d.\n", name, position, bet);

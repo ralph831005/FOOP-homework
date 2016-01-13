@@ -13,7 +13,7 @@ public class POOCasino implements Runnable{
     protected ArrayList<Player> players;
     private Shuffler shuffler;
     private int round;
-    private ArrayList<Hand> current_table;
+    protected ArrayList<Hand> current_table;
     private ArrayList<Hand> last_table;
     private Dealer dealer;
     protected POOCasino(int nPiles){

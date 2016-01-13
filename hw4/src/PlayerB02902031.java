@@ -82,6 +82,8 @@ public class PlayerB02902031 extends Player{
     }
     @Override
     public boolean do_double(Hand my_open, Card dealer_open, ArrayList<Hand> current_table) {
+        if(my_open.getCards().size() < 2)
+            return false;
         int dealer_value = Math.min(dealer_open.getValue(), 10) % 10;
         if(!isBlackJack(my_open.getCards())){
             try {
@@ -104,6 +106,8 @@ public class PlayerB02902031 extends Player{
 
     @Override
     public boolean hit_me(Hand my_open, Card dealer_open, ArrayList<Hand> current_table){
+        if(my_open.getCards().size() < 2)
+            return true;
         int dealer_value = Math.min(dealer_open.getValue(), 10) % 10;
         if(!isBlackJack(my_open.getCards())){
             try {
