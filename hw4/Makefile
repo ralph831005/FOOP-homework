@@ -21,6 +21,6 @@ Human:
 runHuman:
 	$(RN) -cp $(CP) $(MAIN) $(ROUND) $(CHIPS) $(PLAYER1) $(PLAYER1) $(PLAYER2) $(HPLAYER)
 bonus:
-	$(CC) -cp $(CP) src/*.java -d $(OUT)
+	$(CC) -cp $(CP) src/bonus/*.java -d $(OUT)
 clean:
 	rm -rf bin/

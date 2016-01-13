@@ -14,7 +14,7 @@ public class POOCasino implements Runnable{
     private Shuffler shuffler;
     private int round;
     protected ArrayList<Hand> current_table;
-    private ArrayList<Hand> last_table;
+    protected ArrayList<Hand> last_table;
     private Dealer dealer;
     protected POOCasino(int nPiles){
         players = new ArrayList<>();
