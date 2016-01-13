@@ -83,6 +83,11 @@ public class POOCasino implements Runnable{
         for(Arranger player : player_list){
             player.make_bet(last_table, players.size());
         }
+        Iterator<Arranger> player = player_list.iterator();
+        while(player.hasNext()){
+            if(player.next().pass())
+                player.remove();
+        }
     }
     private void assignCards(ArrayList<Arranger> player_list){
         System.out.println("Assign cards to players...");
