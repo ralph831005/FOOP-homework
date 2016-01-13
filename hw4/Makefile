@@ -6,15 +6,19 @@ ROUND = 100
 CHIPS = 100
 PLAYER1 = PlayerB02902031
 PLAYER2 = PlayerB02902031
+PLAYER3 = PlayerB03902084
+PLAYER4 = PlayerB03902084
 MAIN = POOCasino
-RM = rm
-RM_F = -rf
+HPLAYER = PlayerHuman
 all:
 	mkdir -p bin/
 	$(CC) -cp $(CP) src/PlayerB02902031.java -d lib
 	$(CC) -cp $(CP) src/Arranger.java src/Shuffler.java src/POOCasino.java src/Checker.java src/Dealer.java -d $(OUT)
 run:
-	$(RN) -cp $(CP) $(MAIN) $(ROUND) $(CHIPS) $(PLAYER1) $(PLAYER1) $(PLAYER2) $(PLAYER2)
+	$(RN) -cp $(CP) $(MAIN) $(ROUND) $(CHIPS) $(PLAYER1) $(PLAYER2) $(PLAYER3) $(PLAYER4)
+Human:
+	$(CC) -cp $(CP) src/PlayerHuman.java -d lib
+runHuman:
+	$(RN) -cp $(CP) $(MAIN) $(ROUND) $(CHIPS) $(PLAYER1) $(PLAYER1) $(PLAYER2) $(HPLAYER)
 clean:
-	$(RM) $(RM_F) $(OUT)
-	$(RM) -f lib/PlayerB02902031.class
+	rm -rf bin/
